@@ -30,4 +30,14 @@ class DistributeLockService(
         }
     }
 
+    fun executeWithLock(lockName: String, waitTime: Long, leaseTime: Long, logic: () -> Unit) {
+        val lock: RLock = redissonClient.getLock(lockName)
+        val isLocked = lock.tryLock(waitTime, leaseTime, TimeUnit.SECONDS)
+        try {
+            if (isLocked.not()) throw IllegalStateException("[$lockName] lock 획득 실패")
+            logic()
+        } finally {
+            if (lock.isLocked && lock.isHeldByCurrentThread) lock.unlock()
+        }
+    }
 }
