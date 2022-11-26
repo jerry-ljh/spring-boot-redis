@@ -12,7 +12,7 @@ class TicketIssueService(
 
     fun issueTicket(ticket: TICKET, user: User) {
         loadData()
-        distributeLockService.executeWithLock(lockName = ticket.name, waitTime = 3, leaseTime = 3) {
+        distributeLockService.executeWithLock(lockName = "${ticket.name}:lock", waitTime = 3, leaseTime = 3) {
             TicketOffice.issueTicket(ticket, user)
         }
     }

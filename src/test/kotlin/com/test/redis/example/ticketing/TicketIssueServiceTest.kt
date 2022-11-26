@@ -26,7 +26,7 @@ class TicketIssueServiceTest(
     }
 
     @Test
-    fun `issueTicketAsync 잔여 티켓 수보다 많은 유저가 동시에 티켓 발급을 요청해도 잔여 티켓이상으로 발급되지 않는다`() {
+    fun `issueTicketAsync 유저가 동시에 티켓 발급을 요청해도 잔여 티켓 수 이상으로 발급되지 않는다`() {
         // given
         val totalTicketCount = TicketOffice.getRemainTicketCount(TICKET.JERRY_MUSICAL)
         val userCount = totalTicketCount * 2

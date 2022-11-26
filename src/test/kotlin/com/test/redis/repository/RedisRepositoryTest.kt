@@ -91,7 +91,7 @@ class RedisRepositoryTest(
         redisRepository.zAdd(key, value2, score = 0.2)
         redisRepository.zAdd(key, value3, score = 0.3)
         // when
-        val result = redisRepository.zRange(key, startRank = 1, endRank = 3)
+        val result = redisRepository.zRange(key, startRank = 1, endRank = 2)
         // then
         result shouldBe setOf(value2, value3)
     }
