@@ -1,6 +1,7 @@
 package com.test.redis.repository
 
 import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.data.redis.core.ZSetOperations
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -26,9 +27,12 @@ class RedisRepository(
     fun zRangeByScore(key: String, startScore: Double, endScore: Double): Set<Any>? {
         return redisTemplate.opsForZSet().rangeByScore(key, startScore, endScore)
     }
-    
+
     fun zSize(key: String): Long? {
         return redisTemplate.opsForZSet().size(key)
     }
 
+    fun zPopMin(key: String): ZSetOperations.TypedTuple<Any>? {
+        return redisTemplate.opsForZSet().popMin(key)
+    }
 }
